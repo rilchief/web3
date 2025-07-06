@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Analytics Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-tractor"></i>Farm Analytics</h2>
+            </div>
+            <ul>
+                <li><a href="#" class="nav-link active" data-section="overview"><i class="fas fa-home"></i> Overview</a></li>
+                <li><a href="#" class="nav-link" data-section="analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="#" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            <header>
+                <h1 id="page-title">Dashboard Overview</h1>
+                <div class="header-info">
+                    <span class="date-time" id="current-date-time"></span>
+                </div>
+            </header>
+            
+            <!-- Overview Section -->
+            <div id="overview-section" class="content-section active">
+                <div class="widgets-grid">
+                    <div class="widget-card chart-card">
+                        <h3><i class="fas fa-leaf"></i>NDVI Time Series</h3>
+                        <canvas id="ndviChart"></canvas>
+                    </div>
+                    <div class="widget-card chart-card">
+                        <h3><i class="fas fa-seedling"></i>NDRE Time Series</h3>
+                        <canvas id="ndreChart"></canvas>
+                    </div>
+                    <div class="widget-card chart-card">
+                        <h3><i class="fas fa-flask"></i>Nitrogen Estimates</h3>
+                        <canvas id="nitrogenChart"></canvas>
+                    </div>
+                    <div class="widget-card data-card" id="weather">
+                        <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
+                        <div id="weather-content"></div>
+                    </div>
+                    <div class="widget-card data-card" id="soil-data">
+                        <h3><i class="fas fa-chart-area"></i> Soil Data</h3>
+                        <div id="soil-data-content"></div>
+                    </div>
+                    <div class="widget-card data-card" id="real-time-soil-data">
+                        <h3><i class="fas fa-wave-square"></i> Real-time Soil Data</h3>
+                        <div id="real-time-soil-data-content"></div>
+                    </div>
+                    <div class="widget-card map-card">
+                        <h3><i class="fas fa-satellite"></i> Satellite Field View</h3>
+                        <iframe src="satellite_imagery_folium.html" title="Satellite Field View"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analytics Section -->
+            <div id="analytics-section" class="content-section">
+                <div class="analytics-content">
+                    <h2>Analytics Dashboard</h2>
+                    <div class="analytics-grid">
+                        <div class="widget-card">
+                            <h3><i class="fas fa-chart-pie"></i> Performance Summary</h3>
+                            <div class="summary-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Avg NDVI:</span>
+                                    <span class="stat-value" id="avg-ndvi">0.45</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Avg NDRE:</span>
+                                    <span class="stat-value" id="avg-ndre">0.32</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Avg Nitrogen:</span>
+                                    <span class="stat-value" id="avg-nitrogen">0.68</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-card">
+                            <h3><i class="fas fa-trend-up"></i> Trends Analysis</h3>
+                            <p>NDVI shows seasonal patterns with peaks in summer months. Nitrogen levels correlate well with vegetation health indicators.</p>
+                        </div>
+                        <div class="widget-card">
+                            <h3><i class="fas fa-calendar-alt"></i> Recent Activity</h3>
+                            <div class="activity-list">
+                                <div class="activity-item">Data collected: <strong>June 19, 2025</strong></div>
+                                <div class="activity-item">Weather updated: <strong>Today</strong></div>
+                                <div class="activity-item">Soil analysis: <strong>Last updated</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Section -->
+            <div id="settings-section" class="content-section">
+                <div class="settings-content">
+                    <h2>Settings</h2>
+                    <div class="settings-grid">
+                        <div class="widget-card">
+                            <h3><i class="fas fa-map-marker-alt"></i> Location Settings</h3>
+                            <div class="setting-item">
+                                <label>Field Location:</label>
+                                <span>Bristol, UK (51.4545, -2.5879)</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>Update Frequency:</label>
+                                <span>Every 10 minutes</span>
+                            </div>
+                        </div>
+                        <div class="widget-card">
+                            <h3><i class="fas fa-bell"></i> Notifications</h3>
+                            <div class="setting-item">
+                                <label>Weather Alerts:</label>
+                                <span>Enabled</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>Data Updates:</label>
+                                <span>Enabled</span>
+                            </div>
+                        </div>
+                        <div class="widget-card">
+                            <h3><i class="fas fa-database"></i> Data Sources</h3>
+                            <div class="setting-item">
+                                <label>Weather API:</label>
+                                <span>OpenWeatherMap</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>Satellite Data:</label>
+                                <span>Sentinel-2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
