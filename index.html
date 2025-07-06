@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <button class="night-toggle" id="night-toggle" aria-label="Toggle night mode">
+        <i class="fas fa-moon"></i>
+    </button>
     <div class="dashboard-container">
         <nav class="sidebar">
             <div class="sidebar-header">
@@ -33,7 +36,7 @@
             
             <!-- Overview Section -->
             <div id="overview-section" class="content-section active">
-                <div class="widgets-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));">
+                <div class="widgets-grid">
                     <div class="widget-card data-card" id="weather">
                         <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
                         <div id="weather-content"></div>
@@ -159,6 +162,36 @@
         </main>
     </div>
     <script src="script.js"></script>
+    <script>
+    // Night mode toggle logic (improved)
+    const toggleBtn = document.getElementById('night-toggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const root = document.documentElement;
+    function setTheme(theme) {
+        if (theme === 'night') {
+            root.classList.add('night-mode');
+            root.classList.add('night-mode');
+            toggleBtn.classList.add('night');
+            toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            toggleBtn.setAttribute('aria-label', 'Switch to day mode');
+        } else {
+            root.classList.remove('night-mode');
+            toggleBtn.classList.remove('night');
+            toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            toggleBtn.setAttribute('aria-label', 'Switch to night mode');
+        }
+    }
+    let theme = localStorage.getItem('theme');
+    if (!theme) theme = prefersDark ? 'night' : 'day';
+    setTheme(theme);
+    toggleBtn.addEventListener('click', () => {
+        theme = (theme === 'night') ? 'day' : 'night';
+        localStorage.setItem('theme', theme);
+        setTheme(theme);
+    });
+    // Responsive nav toggle for mobile (optional improvement)
+    // Add a hamburger menu for sidebar if needed in the future
+    </script>
 </body>
 </html>
 
