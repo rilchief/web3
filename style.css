@@ -1,3 +1,100 @@
+/* --- TerraInsight Theme & UI/UX Enhancements --- */
+body, html {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+h1, h2, h3, .sidebar-header h2, .card-header h3 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+}
+.section-title {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  color: #7ec850;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+.card-menu {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.card-menu:hover {
+  background: rgba(255,255,255,0.08);
+}
+.insights-section {
+  margin-top: 32px;
+  background: rgba(36,40,54,0.95);
+  border-radius: 16px;
+  padding: 18px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.insights-section h4 {
+  color: #7ec850;
+  font-family: 'Montserrat', Arial, sans-serif;
+  margin-bottom: 10px;
+}
+.insights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.insights-list li {
+  margin-bottom: 8px;
+  font-size: 1.08em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+.insight-alert { color: #ffc107; font-weight: 600; }
+.insight-recommend { color: #7ec850; font-weight: 600; }
+.insight-compare { color: #4fc3f7; font-weight: 600; }
+.insights-list i { margin-right: 8px; }
+.date-picker-container {
+  display: inline-block;
+  margin-left: 24px;
+}
+#date-range {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #393e5c;
+  font-size: 1em;
+  background: #232946;
+  color: #fff;
+  margin-top: 8px;
+  outline: none;
+  min-width: 180px;
+}
+.flatpickr-calendar {
+  background: #232946;
+  color: #fff;
+  border: 1px solid #393e5c;
+}
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+  background: #7ec850;
+  color: #232946;
+}
+.flatpickr-day.today { border-color: #ffc107; }
+.flatpickr-months .flatpickr-month { color: #fff; }
+.flatpickr-weekday { color: #fff; }
+.flatpickr-day { color: #fff; }
+.flatpickr-day:hover { background: #393e5c; }
+/* Widget card shadow for pop */
+.widget-card {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08), 0 1.5px 8px rgba(118, 75, 162, 0.08);
+}
+.widget-card .card-header h3 { margin: 0; }
+@media (max-width: 900px) {
+  .date-picker-container { display: block; margin-left: 0; margin-top: 10px; }
+}
 /* --- Night Mode: Improve Widget and Chart Text Contrast --- */
 .night-mode .widget-card,
 .night-mode .widget-modal {
@@ -969,4 +1066,57 @@ body.night-mode .loading {
     border-radius: 8px;
     padding: 15px;
     margin: 0 -15px;
+}
+
+/* Trends Analysis Styling */
+.trends-analysis-content {
+    padding: 8px 0;
+}
+
+.trend-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    line-height: 1.4;
+}
+
+.trend-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.trend-icon {
+    margin-right: 12px;
+    margin-top: 2px;
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.trend-icon.positive {
+    color: #7ec850;
+}
+
+.trend-icon.neutral {
+    color: #ffd700;
+}
+
+.trend-icon.warning {
+    color: #ff6b6b;
+}
+
+.trend-item span {
+    color: #000;
+    font-size: 0.9em;
+}
+
+/* Night mode adjustments */
+.night-mode .trend-item {
+    border-bottom-color: rgba(255,255,255,0.08);
+}
+
+.night-mode .trend-item span {
+    color: #ffffff;
 }

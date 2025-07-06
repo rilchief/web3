@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Fonts for TerraInsight Theme -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+    <!-- Chart.js Zoom/Pan Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farm Analytics Dashboard</title>
@@ -33,7 +38,10 @@
         
         <main class="main-content">
             <header>
-                <h1 id="page-title">Dashboard Overview</h1>
+                <h1 id="page-title">Dashboard <span class="section-title">Overview</span></h1>
+                <div class="date-picker-container">
+                    <input type="text" id="date-range" placeholder="Select date range" readonly>
+                </div>
                 <div class="header-info">
                     <span class="date-time" id="current-date-time"></span>
                 </div>
@@ -56,40 +64,35 @@
             <!-- Vegetation Section -->
             <div id="vegetation-section" class="content-section">
                 <div class="widgets-grid">
-                    <div class="widget-card chart-card expandable" data-modal="ndvi-modal">
-                        <h3><i class="fas fa-leaf"></i>NDVI Time Series</h3>
+                    <div class="widget-card chart-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-leaf"></i>NDVI Time Series</h3>
+                            <button class="card-menu" title="More options"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
                         <canvas id="ndviChart"></canvas>
                     </div>
-                    <div class="widget-card chart-card expandable" data-modal="ndre-modal">
-                        <h3><i class="fas fa-seedling"></i>NDRE Time Series</h3>
+                    <div class="widget-card chart-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-seedling"></i>NDRE Time Series</h3>
+                            <button class="card-menu" title="More options"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
                         <canvas id="ndreChart"></canvas>
                     </div>
-                    <div class="widget-card chart-card expandable" data-modal="nitrogen-modal">
-                        <h3><i class="fas fa-flask"></i>Nitrogen Estimates</h3>
+                    <div class="widget-card chart-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-flask"></i>Nitrogen Estimates</h3>
+                            <button class="card-menu" title="More options"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
                         <canvas id="nitrogenChart"></canvas>
                     </div>
                 </div>
-                <!-- Modals for expanded charts -->
-                <div class="widget-modal-overlay" id="ndvi-modal">
-                  <div class="widget-modal">
-                    <button class="widget-modal-close" aria-label="Close">&times;</button>
-                    <h3><i class="fas fa-leaf"></i> NDVI Time Series (Expanded)</h3>
-                    <canvas id="ndviChartModal"></canvas>
-                  </div>
-                </div>
-                <div class="widget-modal-overlay" id="ndre-modal">
-                  <div class="widget-modal">
-                    <button class="widget-modal-close" aria-label="Close">&times;</button>
-                    <h3><i class="fas fa-seedling"></i> NDRE Time Series (Expanded)</h3>
-                    <canvas id="ndreChartModal"></canvas>
-                  </div>
-                </div>
-                <div class="widget-modal-overlay" id="nitrogen-modal">
-                  <div class="widget-modal">
-                    <button class="widget-modal-close" aria-label="Close">&times;</button>
-                    <h3><i class="fas fa-flask"></i> Nitrogen Estimates (Expanded)</h3>
-                    <canvas id="nitrogenChartModal"></canvas>
-                  </div>
+                <div class="insights-section">
+                    <h4><i class="fas fa-lightbulb"></i> Insights</h4>
+                    <ul class="insights-list">
+                        <li><span class="insight-alert"><i class="fas fa-exclamation-triangle"></i> NDVI dropped below 0.3 on June 15.</span></li>
+                        <li><span class="insight-recommend"><i class="fas fa-leaf"></i> Consider irrigation: NDRE trend is declining.</span></li>
+                        <li><span class="insight-compare"><i class="fas fa-chart-line"></i> NDVI is 10% above last year’s average.</span></li>
+                    </ul>
                 </div>
             </div>
 
@@ -189,51 +192,25 @@
         </main>
     </div>
     <script src="script.js"></script>
+    <!-- Flatpickr for date range picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-    // Expandable chart logic (fixed for global chart objects)
-    document.querySelectorAll('.expandable').forEach(card => {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function(e) {
-        const modalId = card.getAttribute('data-modal');
-        const modal = document.getElementById(modalId);
-        if (modal) {
-          modal.classList.add('active');
-          // Copy chart data to modal chart (if Chart.js is used)
-          const chartId = card.querySelector('canvas').id;
-          const modalChartId = modal.querySelector('canvas').id + 'Modal';
-          if (window[chartId + 'Obj']) {
-            // If already created, destroy previous modal chart
-            if (window[modalChartId + 'Obj']) window[modalChartId + 'Obj'].destroy();
-            const origChart = window[chartId + 'Obj'];
-            const ctx = document.getElementById(modalChartId).getContext('2d');
-            window[modalChartId + 'Obj'] = new Chart(ctx, {
-              type: origChart.config.type,
-              data: JSON.parse(JSON.stringify(origChart.data)),
-              options: Object.assign({}, origChart.options, {responsive: true, maintainAspectRatio: false})
-            });
-          }
+    // Date range picker
+    flatpickr("#date-range", {
+        mode: "range",
+        dateFormat: "Y-m-d",
+        onClose: function(selectedDates, dateStr, instance) {
+            // TODO: Filter chart data by selected date range
         }
-      });
     });
-    document.querySelectorAll('.widget-modal-close').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const overlay = btn.closest('.widget-modal-overlay');
-        overlay.classList.remove('active');
-        // Destroy modal chart to free memory
-        const modalChart = overlay.querySelector('canvas');
-        if (modalChart && window[modalChart.id + 'Obj']) {
-          window[modalChart.id + 'Obj'].destroy();
-          window[modalChart.id + 'Obj'] = null;
-        }
-      });
-    });
-    // Optional: close modal on overlay click
-    document.querySelectorAll('.widget-modal-overlay').forEach(overlay => {
-      overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) {
-          overlay.classList.remove('active');
-        }
-      });
+
+    // Card menu (three dots) click
+    document.querySelectorAll('.card-menu').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            alert('More options coming soon!');
+        });
     });
     </script>
     <script>
