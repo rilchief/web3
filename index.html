@@ -12,6 +12,11 @@
     <button class="night-toggle" id="night-toggle" aria-label="Toggle night mode">
         <i class="fas fa-moon"></i>
     </button>
+    <!-- Floating Action Button for Quick Add/Help -->
+    <button class="fab" id="fab" aria-label="Quick Actions">
+        <i class="fas fa-plus"></i>
+    </button>
+    <span class="fab-tooltip" id="fab-tooltip">Quick Add / Help</span>
     <div class="dashboard-container">
         <nav class="sidebar">
             <div class="sidebar-header">
@@ -162,6 +167,27 @@
         </main>
     </div>
     <script src="script.js"></script>
+    <script>
+    // Floating Action Button logic
+    const fab = document.getElementById('fab');
+    const fabTooltip = document.getElementById('fab-tooltip');
+    fab.addEventListener('mouseenter', () => {
+        fabTooltip.style.opacity = 1;
+    });
+    fab.addEventListener('mouseleave', () => {
+        fabTooltip.style.opacity = 0;
+    });
+    fab.addEventListener('focus', () => {
+        fabTooltip.style.opacity = 1;
+    });
+    fab.addEventListener('blur', () => {
+        fabTooltip.style.opacity = 0;
+    });
+    fab.addEventListener('click', () => {
+        // Example: Show a modal or alert for quick actions
+        alert('Quick Actions: Add new data, get help, or customize dashboard!');
+    });
+    </script>
     <script>
     // Night mode toggle logic (improved)
     const toggleBtn = document.getElementById('night-toggle');

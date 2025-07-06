@@ -1,3 +1,99 @@
+/* --- UI/UX ENHANCEMENTS --- */
+/* Add subtle card glow and shadow for modern look */
+.widget-card {
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.10), 0 1.5px 8px rgba(118, 75, 162, 0.08);
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+.widget-card:hover {
+  box-shadow: 0 12px 48px 0 rgba(102, 126, 234, 0.18), 0 2px 12px rgba(118, 75, 162, 0.12);
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* Animated section transitions */
+.content-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s, transform 0.4s;
+  pointer-events: none;
+}
+.content-section.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Add a floating action button for quick actions */
+.fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 10001;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.fab:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.28);
+}
+
+/* Tooltip for FAB */
+.fab-tooltip {
+  position: absolute;
+  right: 70px;
+  bottom: 16px;
+  background: #232946;
+  color: #ffe066;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 1em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.fab:hover + .fab-tooltip, .fab:focus + .fab-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Night mode for FAB */
+.night-mode .fab {
+  background: linear-gradient(135deg, #393e5c 0%, #232946 100%);
+  color: #ffe066;
+}
+.night-mode .fab-tooltip {
+  background: #ffe066;
+  color: #232946;
+}
+
+/* Animated loading spinner for FAB actions */
+.fab-spinner {
+  border: 3px solid #fff;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+/* Accessibility: focus ring for FAB */
+.fab:focus {
+  outline: 3px solid #ffe066;
+  outline-offset: 2px;
+}
 .night-mode .data-item span,
 .night-mode .data-item strong,
 .night-mode .weather-desc,
