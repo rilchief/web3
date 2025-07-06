@@ -1,3 +1,126 @@
+/* --- Night Mode: Improve Widget and Chart Text Contrast --- */
+.night-mode .widget-card,
+.night-mode .widget-modal {
+  color: #fff !important;
+}
+.night-mode .widget-card h3,
+.night-mode .widget-modal h3,
+.night-mode .widget-card h3 i,
+.night-mode .widget-modal h3 i {
+  color: #fff !important;
+}
+.night-mode .data-item span,
+.night-mode .data-item strong,
+.night-mode .stat-label,
+.night-mode .stat-value,
+.night-mode .setting-item label,
+.night-mode .setting-item span,
+.night-mode .activity-item,
+.night-mode .weather-desc,
+.night-mode .weather-humidity,
+.night-mode .weather-date {
+  color: #fff !important;
+}
+.night-mode .data-item strong {
+  font-weight: 700;
+  color: #fff !important;
+}
+.night-mode .widget-card .chartjs-title,
+.night-mode .widget-card .chartjs-legend,
+.night-mode .widget-card .chartjs-label,
+.night-mode .widget-card .chartjs-tick {
+  color: #fff !important;
+  fill: #fff !important;
+}
+/* --- Improved Chart Readability for Night Mode --- */
+.night-mode .chart-card canvas,
+.night-mode .widget-modal canvas {
+  background: #181c24 !important;
+}
+.night-mode .chartjs-render-monitor,
+.night-mode .chartjs-size-monitor,
+.night-mode .chartjs-title,
+.night-mode .chartjs-legend,
+.night-mode .chartjs-axis-label,
+.night-mode .chartjs-label,
+.night-mode .chartjs-tick,
+.night-mode .chartjs-tooltip,
+.night-mode .chartjs-tooltip-label,
+.night-mode .chartjs-tooltip-title {
+  color: #ffe066 !important;
+  fill: #ffe066 !important;
+}
+.night-mode .widget-card h3,
+.night-mode .widget-card h3 i,
+.night-mode .widget-modal h3,
+.night-mode .widget-modal h3 i {
+  color: #ffe066 !important;
+}
+.night-mode .widget-modal {
+  border: 1.5px solid #ffe066 !important;
+}
+/* --- Expandable Widget Modal --- */
+.widget-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(36, 40, 54, 0.85);
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.widget-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.widget-modal {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 48px rgba(102, 126, 234, 0.18);
+  padding: 32px 28px 24px 28px;
+  max-width: 900px;
+  width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalPop 0.3s cubic-bezier(.4,2,.6,1) 1;
+}
+.night-mode .widget-modal {
+  background: #232946;
+  color: #ffe066;
+}
+.widget-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #ffe066;
+  color: #232946;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.3em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.widget-modal-close:hover {
+  background: #232946;
+  color: #ffe066;
+}
+@keyframes modalPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 /* --- UI/UX ENHANCEMENTS --- */
 /* Add subtle card glow and shadow for modern look */
 .widget-card {

@@ -235,6 +235,11 @@ async function drawNdviChart() {
         console.error('NDVI chart element not found');
         return;
     }
+    // Remove any previous chart instance
+    if (window.ndviChartObj) {
+        window.ndviChartObj.destroy();
+        window.ndviChartObj = null;
+    }
 
     try {
         const data = await fetchAndParseCSV('ndvi_time_series.csv', NDVI_CSV);
@@ -249,7 +254,7 @@ async function drawNdviChart() {
         console.log('NDVI processed data:', labels.length, 'points');
         
         const ctx = chartEl.getContext('2d');
-        new Chart(ctx, {
+        window.ndviChartObj = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
@@ -294,6 +299,10 @@ async function drawNdreChart() {
         console.error('NDRE chart element not found');
         return;
     }
+    if (window.ndreChartObj) {
+        window.ndreChartObj.destroy();
+        window.ndreChartObj = null;
+    }
 
     try {
         const data = await fetchAndParseCSV('ndre_time_series.csv', NDRE_CSV);
@@ -308,7 +317,7 @@ async function drawNdreChart() {
         console.log('NDRE processed data:', labels.length, 'points');
         
         const ctx = chartEl.getContext('2d');
-        new Chart(ctx, {
+        window.ndreChartObj = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
@@ -353,6 +362,10 @@ async function drawNitrogenChart() {
         console.error('Nitrogen chart element not found');
         return;
     }
+    if (window.nitrogenChartObj) {
+        window.nitrogenChartObj.destroy();
+        window.nitrogenChartObj = null;
+    }
 
     try {
         const data = await fetchAndParseCSV('nitrogen_estimates.csv', NITROGEN_CSV);
@@ -368,7 +381,7 @@ async function drawNitrogenChart() {
         console.log('Nitrogen processed data:', labels.length, 'points');
         
         const ctx = chartEl.getContext('2d');
-        new Chart(ctx, {
+        window.nitrogenChartObj = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,

@@ -56,18 +56,40 @@
             <!-- Vegetation Section -->
             <div id="vegetation-section" class="content-section">
                 <div class="widgets-grid">
-                    <div class="widget-card chart-card">
+                    <div class="widget-card chart-card expandable" data-modal="ndvi-modal">
                         <h3><i class="fas fa-leaf"></i>NDVI Time Series</h3>
                         <canvas id="ndviChart"></canvas>
                     </div>
-                    <div class="widget-card chart-card">
+                    <div class="widget-card chart-card expandable" data-modal="ndre-modal">
                         <h3><i class="fas fa-seedling"></i>NDRE Time Series</h3>
                         <canvas id="ndreChart"></canvas>
                     </div>
-                    <div class="widget-card chart-card">
+                    <div class="widget-card chart-card expandable" data-modal="nitrogen-modal">
                         <h3><i class="fas fa-flask"></i>Nitrogen Estimates</h3>
                         <canvas id="nitrogenChart"></canvas>
                     </div>
+                </div>
+                <!-- Modals for expanded charts -->
+                <div class="widget-modal-overlay" id="ndvi-modal">
+                  <div class="widget-modal">
+                    <button class="widget-modal-close" aria-label="Close">&times;</button>
+                    <h3><i class="fas fa-leaf"></i> NDVI Time Series (Expanded)</h3>
+                    <canvas id="ndviChartModal"></canvas>
+                  </div>
+                </div>
+                <div class="widget-modal-overlay" id="ndre-modal">
+                  <div class="widget-modal">
+                    <button class="widget-modal-close" aria-label="Close">&times;</button>
+                    <h3><i class="fas fa-seedling"></i> NDRE Time Series (Expanded)</h3>
+                    <canvas id="ndreChartModal"></canvas>
+                  </div>
+                </div>
+                <div class="widget-modal-overlay" id="nitrogen-modal">
+                  <div class="widget-modal">
+                    <button class="widget-modal-close" aria-label="Close">&times;</button>
+                    <h3><i class="fas fa-flask"></i> Nitrogen Estimates (Expanded)</h3>
+                    <canvas id="nitrogenChartModal"></canvas>
+                  </div>
                 </div>
             </div>
 
@@ -167,6 +189,53 @@
         </main>
     </div>
     <script src="script.js"></script>
+    <script>
+    // Expandable chart logic (fixed for global chart objects)
+    document.querySelectorAll('.expandable').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(e) {
+        const modalId = card.getAttribute('data-modal');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add('active');
+          // Copy chart data to modal chart (if Chart.js is used)
+          const chartId = card.querySelector('canvas').id;
+          const modalChartId = modal.querySelector('canvas').id + 'Modal';
+          if (window[chartId + 'Obj']) {
+            // If already created, destroy previous modal chart
+            if (window[modalChartId + 'Obj']) window[modalChartId + 'Obj'].destroy();
+            const origChart = window[chartId + 'Obj'];
+            const ctx = document.getElementById(modalChartId).getContext('2d');
+            window[modalChartId + 'Obj'] = new Chart(ctx, {
+              type: origChart.config.type,
+              data: JSON.parse(JSON.stringify(origChart.data)),
+              options: Object.assign({}, origChart.options, {responsive: true, maintainAspectRatio: false})
+            });
+          }
+        }
+      });
+    });
+    document.querySelectorAll('.widget-modal-close').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const overlay = btn.closest('.widget-modal-overlay');
+        overlay.classList.remove('active');
+        // Destroy modal chart to free memory
+        const modalChart = overlay.querySelector('canvas');
+        if (modalChart && window[modalChart.id + 'Obj']) {
+          window[modalChart.id + 'Obj'].destroy();
+          window[modalChart.id + 'Obj'] = null;
+        }
+      });
+    });
+    // Optional: close modal on overlay click
+    document.querySelectorAll('.widget-modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+        }
+      });
+    });
+    </script>
     <script>
     // Floating Action Button logic
     const fab = document.getElementById('fab');
