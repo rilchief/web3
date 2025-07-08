@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initializeDashboard();
 
     // Set interval for real-time data updates
-    setInterval(fetchRealTimeSoilData, 10 * 60 * 1000); // Refresh every 10 minutes
+    setInterval(fetchRealTimeSoilData, 2 * 60 * 1000); // Refresh every 10 minutes
 
     // Trends Analysis: show a message or real data if available
     setTimeout(() => {
